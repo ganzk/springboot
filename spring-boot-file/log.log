@@ -1,0 +1,8 @@
+2021-08-18 11:48:16.185  INFO 32668 --- [main] c.e.s.SpringBootFileApplicationTests     : Starting SpringBootFileApplicationTests using Java 1.8.0_181 on LAPTOP-SOTUENPR with PID 32668 (started by track in D:\ideaProject\springboot\spring-boot-file)
+2021-08-18 11:48:16.197  INFO 32668 --- [main] c.e.s.SpringBootFileApplicationTests     : No active profile set, falling back to default profiles: default
+2021-08-18 11:48:18.332  INFO 32668 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-18 11:48:18.704  INFO 32668 --- [main] c.e.s.SpringBootFileApplicationTests     : Started SpringBootFileApplicationTests in 3.04 seconds (JVM running for 4.645)
+2021-08-18 17:16:55.361  INFO 33824 --- [main] c.e.s.SpringBootFileApplicationTests     : Starting SpringBootFileApplicationTests using Java 1.8.0_181 on LAPTOP-SOTUENPR with PID 33824 (started by track in D:\ideaProject\springboot\spring-boot-file)
+2021-08-18 17:16:55.366  INFO 33824 --- [main] c.e.s.SpringBootFileApplicationTests     : No active profile set, falling back to default profiles: default
+2021-08-18 17:16:57.504  INFO 33824 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-08-18 17:16:57.863  INFO 33824 --- [main] c.e.s.SpringBootFileApplicationTests     : Started SpringBootFileApplicationTests in 2.986 seconds (JVM running for 4.553)
