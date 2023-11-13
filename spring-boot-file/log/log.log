@@ -1,0 +1,4 @@
+2021-09-06 10:46:17.346  INFO 36828 --- [main] c.e.s.SpringBootFileApplicationTests     : Starting SpringBootFileApplicationTests using Java 1.8.0_181 on LAPTOP-SOTUENPR with PID 36828 (started by track in D:\ideaProject\springboot\spring-boot-file)
+2021-09-06 10:46:17.350  INFO 36828 --- [main] c.e.s.SpringBootFileApplicationTests     : No active profile set, falling back to default profiles: default
+2021-09-06 10:46:19.473  INFO 36828 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-09-06 10:46:19.876  INFO 36828 --- [main] c.e.s.SpringBootFileApplicationTests     : Started SpringBootFileApplicationTests in 3.09 seconds (JVM running for 4.853)

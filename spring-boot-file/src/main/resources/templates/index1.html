@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>文件上传</title>
+        <script type="text/javascript" src="js/showdown-master/dist/showdown.min.js"></script>
+    </head>
+    <body>
+        <form method="post" action="/file/upload" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <br><br>
+            <input type="submit" value="提交">
+        </form>
+<!--        <form method="post" action="/file/download/Linux.md">-->
+<!--            <input type="submit" value="Linux.md">-->
+<!--        </form>-->
+<!--        <form method="post" action="/file/download/Linux.pdf">-->
+<!--            <input type="submit" value="Linux.pdf">-->
+<!--        </form>-->
+<!--        录制文件_2.mp4  录制文件.mp4-->
+        <form method="post" action="/file/download/录制文件.mp4">
+            <input type="submit" value="录制文件.mp4">
+        </form>
+        <form method="post" action="/file/download/录制文件.mp4">
+            <input type="submit" value="录制文件_2.mp4">
+        </form>
+
+        <style>
+
+            blockquote {
+                border-left:#eee solid 5px;
+                padding-left:20px;
+            }
+
+             ul li {
+                 line-height: 20px;
+             }
+
+
+             code {
+                 color:#D34B62;
+                 background: #F6F6F6;
+             }
+
+        </style>
+        <body>
+        <div>
+            <!--设置id为oriContent，如果想实现实时更新，使用onkeyup方法-->
+
+            <textarea id="oriContent" style="height:400px;width:600px;" onkeyup="convert()"></textarea>
+
+            <!---设置展示的div添加id--->
+            <div id="result"></div>
+
+        </div>
+
+        <!--写转化函数-->
+        <script type="text/javascript">
+            function convert(){
+                var text = document.getElementById("oriContent").value;
+                var converter = new showdown.Converter();
+                var html = converter.makeHtml(text);
+                document.getElementById("result").innerHTML = html;
+            }
+        </script>
+
+    </body>
+</html>
