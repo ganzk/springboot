@@ -1,0 +1,63 @@
+# 缩进表示层级  在赋值的时候要用空格
+server:
+  port: 80
+food:
+  meat: 烤肉
+  rice: 米饭
+  saucc:
+    - 沙拉
+    - 烤肉酱
+    - 甜辣
+
+
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/springdao?characterEncoding=UTF-8&&zeroDateTimeBehavior=convertToNull
+#    username: root
+#    password: root
+
+  thymeleaf:
+    # 指定位置，指定位置之后，其他位置的HTML就不会起作用
+    prefix: classpath:/templates/
+    suffix: .html
+
+mybatis:
+  # 设置mapper文件的位置
+  mapperLocations: classpath*:mapper/*.xml
+  configuration:
+    # 设置字段名自动驼峰
+    mapUnderscoreToCamelCase: true
+
+
+
+
+# 配置加密 （加盐加密）
+#jasypt:
+#  encryptor:
+#    password: demo
+#    algorithm: PBEWithMD5AndDES
+#
+#info:
+#  username: ENC(5Zh4rXGVQ5qNgTCr3bb82w==)
+#  password: ENC(hGZCDv4D6JfH5cQ6ud0Gqw==)
+
+# 这里配置启用哪一个环境
+#spring:
+#  profiles:
+#    active: dev
+
+## 文档一
+#---
+#spring:
+#  profiles: dev
+#server:
+#  port: 8090
+#...
+## 文档二
+#---
+#spring:
+#  profiles: prod
+#server:
+#  port: 8080
+#...
