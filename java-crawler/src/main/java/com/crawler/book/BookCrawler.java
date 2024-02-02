@@ -29,11 +29,14 @@ public class BookCrawler {
         String date = ConfUtil.readConfigFile("date");
         List<Crawler> crawlers = JSON.parseArray(String.valueOf(JSON.parseObject(date).get("date")), Crawler.class);
 
+        // User-Agent:
+        //Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1
+        // https://www.66yydstxt178.com/22/22442/757657.html
         for (Crawler crawler : crawlers){
             if("盘龙".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
-                    System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
-//                    testPanLong(crawler.getUrl(), book.getUrl());
+//                    System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
+                    testPanLong(crawler.getUrl(), book.getUrl());
                 }
             } else if("笔趣阁".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
