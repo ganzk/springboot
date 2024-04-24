@@ -10,6 +10,5 @@ public interface HelloService {
 
     UserDo findOne(int id);
 
-    int updateOne(UserDo userDo);
 
 }

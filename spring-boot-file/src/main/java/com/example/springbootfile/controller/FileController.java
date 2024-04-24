@@ -49,7 +49,7 @@ public class FileController {
 
     @RequestMapping("/index")
     public String index() throws IOException {
-        return "index.html";
+        return "index";
     }
 
 

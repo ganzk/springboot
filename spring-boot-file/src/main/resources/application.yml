@@ -1,0 +1,25 @@
+# 本配置文件只存放和环境无关的配置,如果开发、测试、生产环境需要不同配置,请将配置项迁移至对应配置文件.
+server:
+  port: 8090
+#  tomcat:
+#    max-swallow-size: 100MB
+#    max-http-form-post-size: 3145728
+
+# spring 配置
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  #400,500错误码拦截
+  #出现错误时, 直接抛出异常
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+
+
+
+
+
+
