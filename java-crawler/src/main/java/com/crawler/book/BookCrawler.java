@@ -24,7 +24,7 @@ public class BookCrawler {
     ////        String title = "51560/13761662.html"; // 糖糖
     //        String title = "56239/15912102.html"; // 糖糖
     // 读取网页小说，本地执行git命令，将读取的网页小说推送到git上
-    public static void main(String[] args) {
+    public static void bookCrawlerMain() {
 
         String date = ConfUtil.readConfigFile("date");
         List<Crawler> crawlers = JSON.parseArray(String.valueOf(JSON.parseObject(date).get("date")), Crawler.class);
@@ -35,15 +35,20 @@ public class BookCrawler {
         for (Crawler crawler : crawlers){
             if("盘龙".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
-//                    System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
-                    testPanLong(crawler.getUrl(), book.getUrl());
+                    System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
+//                    testPanLong(crawler.getUrl(), book.getUrl());
                 }
             } else if("笔趣阁".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
                     System.out.println("笔趣阁：" + crawler.getUrl() + book.getUrl());
 //                    testBQG(crawler.getUrl(), book.getUrl());
                 }
+            } else if ("biqukan".equals(crawler.getName())){
+
             }
+
+            // https://www.22yyds
+            // https://www.biqukan.co/book/129911/55160034.html
 
         }
     }
