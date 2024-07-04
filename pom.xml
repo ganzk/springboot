@@ -13,6 +13,7 @@
         <module>java-sudo</module>
         <module>java-git</module>
         <module>java-tetris</module>
+        <module>java-fxgl</module>
     </modules>
     <build>
         <plugins>

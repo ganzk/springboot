@@ -36,7 +36,7 @@ public class BookCrawler {
             if("盘龙".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
                     System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
-//                    testPanLong(crawler.getUrl(), book.getUrl());
+                    testPanLong(crawler.getUrl(), book.getUrl());
                 }
             } else if("笔趣阁".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
@@ -44,11 +44,14 @@ public class BookCrawler {
 //                    testBQG(crawler.getUrl(), book.getUrl());
                 }
             } else if ("biqukan".equals(crawler.getName())){
-
+                for (Book book : crawler.getBooks()){
+                    System.out.println("biqukan：" + crawler.getUrl() + book.getUrl());
+//                    testPanLong(crawler.getUrl(), book.getUrl());
+                }
             }
 
             // https://www.22yyds
-            // https://www.biqukan.co/book/129911/55160034.html
+            // https://www.biqukan.co/book/129911/55160271_2.html
 
         }
     }
@@ -105,6 +108,9 @@ public class BookCrawler {
             if(nextUrl.lastIndexOf("https:") > 0){
                 return;
             }
+//            System.out.println(url);
+//            System.out.println(nextUrl);
+//            System.out.println(title);
             System.out.println(url + title.split("/")[0] + "/" + nextUrl);
             nextUrl = title.split("/")[0] + "/" + nextUrl;
             testPanLong(url, nextUrl);
@@ -182,5 +188,13 @@ public class BookCrawler {
 
     }
 
+    // 第一版主
+    // 根据id去查
+    public static void findBookById(String bookId){
+
+
+
+
+    }
 
 }
