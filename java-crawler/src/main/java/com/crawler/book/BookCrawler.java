@@ -19,12 +19,15 @@ public class BookCrawler {
 
     private static String PATH = "d";
 //    private static String PATH = "e";
+    // https://www.biqukan.co/book/130104/55202017.html
 
     ////        String title = "221045/74917026.html"; // 糖糖
     ////        String title = "51560/13761662.html"; // 糖糖
     //        String title = "56239/15912102.html"; // 糖糖
     // 读取网页小说，本地执行git命令，将读取的网页小说推送到git上
     public static void bookCrawlerMain() {
+
+        // https://www.plxs.co/book/978/469432.html
 
         String date = ConfUtil.readConfigFile("date");
         List<Crawler> crawlers = JSON.parseArray(String.valueOf(JSON.parseObject(date).get("date")), Crawler.class);
@@ -36,14 +39,16 @@ public class BookCrawler {
             if("盘龙".equals(crawler.getName())){
                 for (Book book : crawler.getBooks()){
                     System.out.println("盘龙：" + crawler.getUrl() + book.getUrl());
-                    testPanLong(crawler.getUrl(), book.getUrl());
+//                    testPanLong(crawler.getUrl(), book.getUrl());
                 }
             } else if("笔趣阁".equals(crawler.getName())){
+                //
                 for (Book book : crawler.getBooks()){
                     System.out.println("笔趣阁：" + crawler.getUrl() + book.getUrl());
 //                    testBQG(crawler.getUrl(), book.getUrl());
                 }
             } else if ("biqukan".equals(crawler.getName())){
+                // https://www.biqukan.co/book/130104/55202017.html
                 for (Book book : crawler.getBooks()){
                     System.out.println("biqukan：" + crawler.getUrl() + book.getUrl());
 //                    testPanLong(crawler.getUrl(), book.getUrl());
@@ -138,7 +143,8 @@ public class BookCrawler {
 
             Elements bookName = doc.select("title");
             String[] s1 = bookName.text().split("_");
-            String bookStr = "e:/test/"+ s1[0] +".txt";
+            String bookStr = PATH + ":/test/"+ s1[0] +".txt";
+//            String bookStr = PATH + "e:/test/"+ s1[0] +".txt";
             File file=new File(bookStr);
             if(!file.exists()) {
                 try {
@@ -190,6 +196,7 @@ public class BookCrawler {
 
     // 第一版主
     // 根据id去查
+    // https://22yyestxt178.com
     public static void findBookById(String bookId){
 
 

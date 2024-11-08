@@ -1,7 +1,8 @@
 
 #date: {"date":[{"url":"https://www.plxs.co/book/","name":"盘龙","books":[{"url":"56239/15912102.html","name":"糖糖"},{"url":"146397/53690452.html","name":"小茵"},{"url":"56765/16127470.html","name":"小依"},{"url":"225164/74606432.html","name":"我的女友"},{"url":"150878/53822381.html","name":""},{"url":"15447/4920031.html","name":""}]},{"url":"https://m.peblkbbbpd.com","name":"笔趣阁","books":[{"url":"/book/25717808/10987846.html","name":""},{"url":"/20/20951/9943314.html","name":""}]}]}
 #date: {"date":[{"url":"https://www.plxs.co/book/","name":"盘龙","books":[{"url":"18621/5915726.html","name":"糖糖"}]},{"url":"https://m.peblkbbbpd.com","name":"笔趣阁","books":[{"url":"/book/25717808/10987846.html","name":""},{"url":"/20/20951/9943314.html","name":""}]}]}
-date: {"date":[{"url":"https://www.plxs.co/book/","name":"盘龙","books":[{"url":"18621/5915726.html","name":"糖糖"}]},{"url":"https://m.peblkbbbpd.com","name":"笔趣阁","books":[{"url":"/book/25717808/10987846.html","name":""},{"url":"/20/20951/9943314.html","name":""}]},{"url":"https://www.biqukan.co/book/","name":"biqukan","books":[{"url":"129911/55160271_2.html","name":"MS"}]}]}
+# https://www.biqukan.co/book/219793/76837023.html
+  date: {"date":[{"url":"https://www.plxs.co/book/","name":"盘龙","books":[{"url":"18621/5915726.html","name":"糖糖"}, {"url":"978/469432.html","name":"ym"}]},{"url":"https://m.peblkbbbpd.com","name":"笔趣阁","books":[{"url":"/book/25717808/10987846.html","name":""},{"url":"/20/20951/9943314.html","name":""}]},{"url":"https://www.biqukan.co/book/","name":"biqukan","books":[{"url":"130104/55202017.html","name":"MS"},{"url":"219572/76734552.html","name":"wodeshimu"},{"url":"220919/77248360.html","name":"lama"}]}]}
 hhhh: 11111
 crawler:
   - url: https://www.plxs.co/book/
