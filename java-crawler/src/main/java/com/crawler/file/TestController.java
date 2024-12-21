@@ -1,212 +1,73 @@
 package com.crawler.file;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.haier.market.common.consts.MathNumber;
-import com.haier.market.common.utils.AesUtil;
-import com.haier.market.pf.base.api.base.dto.*;
-import com.haier.market.pf.base.ma.consts.JobFactory;
-import com.haier.market.pf.base.ma.dto.JobHandleParamDTO;
-import com.haier.market.pf.base.ma.entity.BaseCrowdPackEntity;
-import com.haier.market.pf.base.ma.entity.PlanInfoEntity;
-import com.haier.market.pf.base.ma.entity.UserInfoEntity;
-import com.haier.market.pf.base.ma.enums.JobEnum;
-import com.haier.market.pf.base.ma.mapper.PlanInfoMapper;
-import com.haier.market.pf.base.ma.service.*;
-import com.haier.market.pf.user.api.user.api.HiWorkAuthApi;
-import com.haier.market.pf.user.api.user.dto.hworkTask.TaskToCommonUserDto;
-import com.haier.market.pf.user.api.user.dto.hworkTask.UserInfoInDto;
-import com.haier.uo.framework.web.entity.Result;
-import com.haier.uo.framework.web.util.ResultUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
-@RestController
 public class TestController {
 
-    @Resource
-    private HiWorkAuthApi hiWorkAuthApi;
 
-    @Resource
-    private FileService fileService;
 
-    @Autowired
-    private AesUtil aesUtil;
+    public static void main(String[] args) throws Exception {
 
-    @Resource
-    private ButtedCDPService buttedCDPService;
+        long l = TimeUnit.MILLISECONDS.toSeconds(135468);
+        System.out.println(l);
 
-    @Resource
-    private BaseCrowdPackService baseCrowdPackService;
+// some code
 
-    @Resource
-    private RecordOssService recordOssService;
 
-    @Resource
-    private PlanInfoMapper planInfoMapper;
+        long start = System.currentTimeMillis();
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\track\\Desktop\\ma.zip");
+//        unzipInputStream(fileInputStream, 139L);
 
-    @PostMapping(value = "ma/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> test() {
-        List<UserInfoInDto> userInfoInDtos = new ArrayList<>();
-        UserInfoInDto userInfoInDto = new UserInfoInDto();
-        userInfoInDto.setUserCode("22077640");
-        userInfoInDtos.add(userInfoInDto);
-        TaskToCommonUserDto task = new TaskToCommonUserDto();
-        task.setTaskUserInfo(userInfoInDtos); // 通知人列表
-        task.setSkipType(0);
-        task.setRemark("发送效率每分钟xxx条，低于预期80%");
-        task.setSystemSource("SP000169");
-        task.setTaskDealType(0);
-        task.setTaskStatus(0);
-        task.setTaskTitle("MA消息队列预警");
-        task.setTaskType(0);
-        task.setTaskTypeEnum("to_common_user");
-        task.setTaskWay(1);
-        task.setClassifyType(6);
-        task.setMsgSendType(0);
-        task.setTaskClassifyCode("hwork-eymedi");
-        Result<String> toCommonUserTask = hiWorkAuthApi.createToCommonUserTask(task);
-        String data = toCommonUserTask.getData();
-        System.out.println(data);
+        importZip(fileInputStream);
 
-        JSONArray objects = JSON.parseArray(data);
-        JSONObject jsonObject = objects.getJSONObject(0);
+//        for (int i = 0; i < 1000; i++) {
+//            String s = "C:\\Users\\track\\Desktop\\ma_batch_7eed7a102cdd4d14ab8c7e6679bf975a\\batch_0.txt";
+//            String s1 = "C:\\Users\\track\\Desktop\\ma_batch_7eed7a102cdd4d14ab8c7e6679bf975a\\batch_0_" + i + ".txt";
+//            Files.copy(new File(s).toPath(), new File(s1).toPath());
+//        }
 
-//        JSONObject jsonObject = JSON.parseObject(s);
-        String taskId = (String) jsonObject.get("taskId");
-        System.out.println(taskId);
 
-        return ResultUtil.success("发送成功");
+//        FileOutputStream os = new FileOutputStream("C:\\Users\\track\\Desktop\\ma.zip");
+//        ZipOutputStream zos = new ZipOutputStream(os);
+//        File file = new File("C:\\Users\\track\\Desktop\\ma_batch_7eed7a102cdd4d14ab8c7e6679bf975a");
+//        File[] files = file.listFiles();
+//        for (int i = 0; i < files.length; i++) {
+//            Path path = files[i].toPath();
+//            ZipEntry zipEntry = new ZipEntry(path.getFileName().toString());
+//            zipEntry.setSize(Files.size(path));
+//            zos.putNextEntry(zipEntry);
+//            Files.copy(path, zos);
+//            zos.closeEntry();
+//
+//        }
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(timeElapsed);
+        System.out.println(seconds);
     }
 
-    @PostMapping(value = "ma/generateBatchCode", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> generateBatchCode() {
+    private static void copyFileUsingJava7Files(File source, File dest)
+            throws IOException {
 
-        // 获取planId
-        PlanInfoEntity planInfoEntity = planInfoMapper.selectById(139L);
-
-        List<PlanBatchDTO> planBatchDTOList = new ArrayList<>();
-        PlanBatchDTO planBatchDTO = new PlanBatchDTO();
-        planBatchDTO.setPlanId(planInfoEntity.getId());
-        planBatchDTO.setScheduleId(planInfoEntity.getScheduleId());
-        planBatchDTO.setCrowdId(planInfoEntity.getCrowdId());
-        planBatchDTO.setCrowdSubType(planInfoEntity.getMainCrowd());
-        // 查询人群包
-        BaseCrowdPackEntity entityByCrowdIdAndType = baseCrowdPackService.getEntityByCrowdIdAndType(planInfoEntity.getCrowdId(), planInfoEntity.getMainCrowd());
-        if (ObjectUtil.isNull(entityByCrowdIdAndType)) {
-            throw new RuntimeException(planInfoEntity.getPlanName() + "计划人群包不存在，请重新选择");
-        }
-        // 是否系统推荐
-        if (MathNumber.ONE.equals(entityByCrowdIdAndType.getSuggestFlag())) {
-            if (StringUtils.isNotEmpty(planInfoEntity.getSmallMicroJson()) && !"[]".equals(planInfoEntity.getSmallMicroJson())) {
-                List<PermissionNodeDTO> list = JSONUtil.toList(JSONUtil.parseArray(planInfoEntity.getSmallMicroJson()), PermissionNodeDTO.class);
-                List<String> microCodeList = list.stream().map(PermissionNodeDTO::getCode).collect(Collectors.toList());
-                planBatchDTO.setMicroList(microCodeList);
-            }
-        }
-        planBatchDTOList.add(planBatchDTO);
-
-        CrowdScheduleDTO crowdScheduleDTO = new CrowdScheduleDTO();
-        crowdScheduleDTO.setMaPlanList(planBatchDTOList);
-        Boolean batchCode = buttedCDPService.getBatchCode(crowdScheduleDTO);
-        System.out.println(batchCode);
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/getCrowdPackOSS", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> getCrowdPackOSS() {
-
-        List<Long> planIds = new ArrayList<>();
-        planIds.add(139L);
-        PlanQueryOSSDTO planQueryOSSDTO = new PlanQueryOSSDTO();
-        planQueryOSSDTO.setPlanIdList(planIds);
-        List<CrowdPackOSSDTO> crowdPackOSS = buttedCDPService.getCrowdPackOSS(planQueryOSSDTO);
-        System.out.println(crowdPackOSS);
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/handleJob", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> handleJob() {
-
-        JobHandle handle = JobFactory.get(JobEnum.CREATE_USER_DATA.getCode());
-        JobHandleParamDTO paramDTO = new JobHandleParamDTO();
-        handle.handleJob(paramDTO);
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/cdp", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> cdp() {
-
-        CDPCrowSizeDTO cdpCrowSizeDTO = new CDPCrowSizeDTO();
-        cdpCrowSizeDTO.setCrowdId(186L);
-        cdpCrowSizeDTO.setCrowdSubType(MathNumber.ZERO);
-        String cdpCrowdSize = buttedCDPService.getCDPCrowdSize(cdpCrowSizeDTO);
-        System.out.println(cdpCrowdSize);
-
-
-        List<SuggestCategoryDTO> suggestCategory = buttedCDPService.getSuggestCategory();
-        System.out.println(suggestCategory);
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/recordOss", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> recordOss() {
-
-//        recordOssService.generateRecordOss();
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/deleteUserInfo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> deleteUserInfo() {
-
-//        recordOssService.deleteUserInfo();
-
-        return ResultUtil.success("发送成功");
-    }
-
-    @PostMapping(value = "ma/unZip", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Result<String> unZip() {
-
-//        InputStream inputStream = fileService.readFile("https://rqqx-test-file.haier.net/cdp/test/ma_batch_13aea62ed7834a0691481eb89c73883e.zip");
-//        InputStream inputStream = fileService.readFile("https://rqqx-test-file.haier.net/ma/test/ma_batch_13aea62ed7834a0691481eb89c73883e9e5073b0d00d42469c54f2a8a9e028b4.zip");
-//        InputStream inputStream = fileService.readFile("https://rqqx-test-file.haier.net/cdp/test/ma_batch_6e985982311f4689b629b475f0d86df1.zip");
-        InputStream inputStream = fileService.readFile("https://rqqx-test-file.haier.net/cdp/test/ma_batch_7eed7a102cdd4d14ab8c7e6679bf975a.zip");
-
-        this.unzipInputStream(inputStream, 138L);
-//        recordOssService.generateRecordOss(null);
-
-        return ResultUtil.success("发送成功");
     }
 
 
 
 
-    private List<List<UserInfoEntity>> unzipInputStream(InputStream zipInputStream, Long planId) {
+    private static void unzipInputStream(InputStream zipInputStream, Long planId) {
+//        ZipFile zipFile = new ZipFile();
+
+
         int count = 0;
-        List<UserInfoEntity> userList = new ArrayList<>();
-        List<List<UserInfoEntity>> userAllList = new ArrayList<>();
         try (ZipInputStream zip = new ZipInputStream(zipInputStream, Charset.forName("UTF-8"))) {
             ZipEntry zipEntry = null;
             BufferedInputStream bs = new BufferedInputStream(zip);
@@ -343,66 +204,84 @@ public class TestController {
                     BufferedReader br = new BufferedReader(new InputStreamReader(byteArrayInputStream));
                     String line = null;
                     while ((line = br.readLine()) != null) {
-                        if (userList.size() >= 1000) {
-                            userAllList.add(userList);
-                            userList = new ArrayList<>();
-                        }
-                        if (StringUtils.isNotEmpty(line)) {
-                            UserInfoEntity userInfoEntity = this.handUserInfo(line, planId);
-                            if (userList.size() % 9 == 0) {
-                                // 10% 实验组
-                                userInfoEntity.setType(MathNumber.THREE);
-                            }
-                            userList.add(userInfoEntity);
-                            count++;
-                        }
+                        System.out.println(line);
                     }
                     br.close();
 
                 }
             }
-            if (CollectionUtil.isNotEmpty(userList)) {
-                userAllList.add(userList);
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return userAllList;
     }
 
-    private UserInfoEntity handUserInfo(String userInfo, Long planId) throws Exception {
-        UserInfoEntity userInfoEntity = new UserInfoEntity();
-        // 解密
-        // 去掉换行符
-//        userInfo.toString().replace("\r\n", "");
-        String decrypt = aesUtil.decrypt(userInfo);
-//        String decrypt = userInfo;
-        String[] split = decrypt.trim().split(",");
-        System.out.println(decrypt);
 
-        // 组装数据
-        if (split.length == 3) {
-            userInfoEntity.setUserId(split[0]);
-            userInfoEntity.setUserName(split[1]);
-            // 加密
-            userInfoEntity.setMobile(split[2]);
-            userInfoEntity.setPlanId(planId);
-            if (StringUtils.isEmpty(split[0]) || StringUtils.isEmpty(split[1])|| StringUtils.isEmpty(split[2])) {
-                userInfoEntity.setState(MathNumber.THREE);
-            } else {
-                userInfoEntity.setState(MathNumber.TWO);
+    public static void importZip(InputStream inputStream) throws IOException {
+
+        ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+        ZipEntry zipEntry;
+        while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+            if (zipEntry.isDirectory()) {
+                // do nothing
+            }else {
+                String name = zipEntry.getName();
+                long size = zipEntry.getSize();
+                // unknown size
+                // ZipEntry的size可能为-1，表示未知
+                // 通过上面的几种方式下载，就会产生这种情况
+                if (size == -1) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    while (true) {
+                        int bytes = zipInputStream.read();
+                        if (bytes == -1) break;
+                        baos.write(bytes);
+                    }
+                    baos.close();
+//                    String s = new String(baos.toByteArray());
+//                    System.out.println(String.format("Name:%s,Content:%s",name,new String(baos.toByteArray())));
+
+                    InputStream byteArrayInputStream = new ByteArrayInputStream(baos.toByteArray());
+                    BufferedReader br = new BufferedReader(new InputStreamReader(byteArrayInputStream));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        System.out.println(line);
+                        System.out.println("==========");
+                    }
+
+
+                } else { // ZipEntry的size正常
+                    byte[] bytes = new byte[(int) zipEntry.getSize()];
+                    zipInputStream.read(bytes, 0, (int) zipEntry.getSize());
+                    System.out.println(String.format("Name:%s,Content:%s",name,new String(bytes)));
+                }
             }
-            userInfoEntity.setType(MathNumber.TWO);
-        } else {
-            userInfoEntity.setUserId(split[0]);
-            userInfoEntity.setState(MathNumber.THREE);
-        }
-        userInfoEntity.setCreateTime(new Date());
-        userInfoEntity.setUpdateTime(new Date());
-        userInfoEntity.setCreateBy("SYSTEM");
-        userInfoEntity.setUpdateBy("SYSTEM");
 
-        return userInfoEntity;
+        }
+        zipInputStream.closeEntry();
+        zipInputStream.close();
     }
+
+
+    private static void copyFileUsingFileStreams(File source, File dest)
+            throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
+        }
+    }
+
+
 
 }

@@ -31,8 +31,8 @@ public class Unpack {
 //        System.out.println(lastTimeString);
 //        System.out.println(beforeLastTimeString);
 //
-//        Date date = parseDate("2024-12-21 18:55:30", "yyyy-MM-dd HH:mm:ss");
-//        System.out.println(GreaterThanOneHour(date, new Date()));
+        Date date = parseDate("2024-12-21 18:55:30", "yyyy-MM-dd HH:mm:ss");
+        System.out.println(GreaterThanOneHour(date, new Date()));
 
 
 
