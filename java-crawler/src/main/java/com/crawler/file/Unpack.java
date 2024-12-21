@@ -20,19 +20,19 @@ public class Unpack {
 
     public static void main(String[] args) throws IOException {
 
-        LocalDateTime nowTime = LocalDateTime.now();
-        // 当前时间
-        String nowTimeString = asMinuteString(nowTime);
-        // 上一分钟/小时
-        String lastTimeString = asMinuteString(nowTime.minusMinutes(1));
-        // 上上分钟/小时
-        String beforeLastTimeString = asMinuteString(nowTime.minusMinutes(2));
-        System.out.println(nowTimeString);
-        System.out.println(lastTimeString);
-        System.out.println(beforeLastTimeString);
-
-        Date date = parseDate("2024-12-21 18:55:30", "yyyy-MM-dd HH:mm:ss");
-        System.out.println(GreaterThanOneHour(date, new Date()));
+//        LocalDateTime nowTime = LocalDateTime.now();
+//        // 当前时间
+//        String nowTimeString = asMinuteString(nowTime);
+//        // 上一分钟/小时
+//        String lastTimeString = asMinuteString(nowTime.minusMinutes(1));
+//        // 上上分钟/小时
+//        String beforeLastTimeString = asMinuteString(nowTime.minusMinutes(2));
+//        System.out.println(nowTimeString);
+//        System.out.println(lastTimeString);
+//        System.out.println(beforeLastTimeString);
+//
+//        Date date = parseDate("2024-12-21 18:55:30", "yyyy-MM-dd HH:mm:ss");
+//        System.out.println(GreaterThanOneHour(date, new Date()));
 
 
 
