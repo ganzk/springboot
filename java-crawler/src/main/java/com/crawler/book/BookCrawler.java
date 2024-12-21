@@ -143,7 +143,7 @@ public class BookCrawler {
 
             Elements bookName = doc.select("title");
             String[] s1 = bookName.text().split("_");
-            String bookStr = PATH + ":/test/"+ s1[0] +".txt";
+            String bookStr = PATH + ":/test/"+ s1[1] +".txt";
 //            String bookStr = PATH + "e:/test/"+ s1[0] +".txt";
             File file=new File(bookStr);
             if(!file.exists()) {
@@ -186,6 +186,154 @@ public class BookCrawler {
             }
             System.out.println(url + nextUrl);
             testBQG(url, nextUrl);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static void testBQG1(String url, String title){
+
+        try {
+
+            // https://101.qq.com/#/hero-detail?heroid=2
+            // 发起HTTP请求并获取网页内容
+            Document doc = Jsoup.connect(url + title).get();
+
+            System.out.println(url + title);
+
+            // 使用CSS选择器获取小说内容所在的HTML元素
+            Elements contentElements = doc.select("#htmlContent");
+
+            Elements bookName = doc.select("title");
+            String[] s1 = bookName.text().split("_");
+            String bookStr = PATH + ":/test/"+ s1[1] +".txt";
+//            String bookStr = PATH + "e:/test/"+ s1[0] +".txt";
+            File file=new File(bookStr);
+            if(!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            //建立文件输出流，保存文本文件，以小说名作为文件名
+            FileWriter fw = new FileWriter(bookStr, true);
+
+
+            // 遍历内容元素并输出文本内容
+            for (Element element : contentElements) {
+                List<Node> nodes = element.childNodes();
+                for (Node node : nodes){
+                    String s = node.outerHtml();
+                    if(s.equals("<br>")){
+
+                    } else if (s.lastIndexOf("text-danger") > 0){
+
+                    } else if (s.equals("<br>")) {
+
+                    } else if (s.contains("<script")) {
+
+                    } else if (s.contains("<div")) {
+
+                    } else if (s.contains("<script")) {
+
+                    } else {
+                        fw.write(s.replace("&nbsp;", "")
+                                .replace("... --&gt;&gt;","")
+                                .replace("<p>","")
+                                .replace("</p>","")
+                                +"\r\n");
+                    }
+                }
+            }
+
+            // https://www.plxs.co/book/221045/74917135_2.html
+            fw.close();
+
+            //解析“下一章”按钮，得到下一章的URL
+            String nextUrl = doc.select("#linkNext").attr("href");
+            if("".equals(nextUrl)){
+                return;
+            }
+            System.out.println(url + nextUrl);
+            testBQG1(url, nextUrl);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static void testBQG2(String url, String title, String bookName){
+
+        try {
+
+            // https://101.qq.com/#/hero-detail?heroid=2
+            // 发起HTTP请求并获取网页内容
+            Document doc = Jsoup.connect(url + title).get();
+
+            System.out.println(url + title);
+
+            // 使用CSS选择器获取小说内容所在的HTML元素
+            Elements contentElements = doc.select("#article");
+
+//            Elements bookName = doc.select("title");
+//            String[] s1 = bookName.text().split("_");
+            String bookStr = PATH + ":/test/"+ bookName +".txt";
+//            String bookStr = PATH + "e:/test/"+ s1[0] +".txt";
+            File file=new File(bookStr);
+            if(!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            //建立文件输出流，保存文本文件，以小说名作为文件名
+            FileWriter fw = new FileWriter(bookStr, true);
+
+
+            // 遍历内容元素并输出文本内容
+            for (Element element : contentElements) {
+                List<Node> nodes = element.childNodes();
+                for (Node node : nodes){
+                    String s = node.outerHtml();
+                    if(s.equals("<br>")){
+
+                    } else if (s.lastIndexOf("text-danger") > 0){
+
+                    } else if (s.equals("<br>")) {
+
+                    } else if (s.contains("<script")) {
+
+                    } else if (s.contains("<div")) {
+
+                    } else if (s.contains("<script")) {
+
+                    } else {
+                        fw.write(s.replace("&nbsp;", "")
+                                .replace("... --&gt;&gt;","")
+                                .replace("<p>","")
+                                .replace("</p>","")
+                                +"\r\n");
+                    }
+                }
+            }
+
+            // https://www.plxs.co/book/221045/74917135_2.html
+            fw.close();
+
+            //解析“下一章”按钮，得到下一章的URL
+            String nextUrl = doc.select("#next_url").attr("href");
+            if("".equals(nextUrl)){
+                return;
+            }
+            System.out.println(url + nextUrl);
+            testBQG2(url, nextUrl,bookName);
 
         } catch (IOException e) {
             e.printStackTrace();
